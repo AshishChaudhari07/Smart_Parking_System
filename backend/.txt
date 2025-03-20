@@ -1,0 +1,51 @@
+USER.........................
+http://localhost:3000/api/user/register  -register
+http://localhost:3000/api/user/login     -login
+http://localhost:3000/api/parker/add     -addparker
+http://localhost:3000/api/user/users     -getusers
+http://localhost:3000/api/user/profile   -view single profile
+http://localhost:3000/api/user/:id   -update profile
+
+VEHICAL......................
+http://localhost:3000/api/vehical/add            -add vehical
+http://localhost:3000/api/vehical/user/:id       -retrive vehical user id through
+http://localhost:3000/api/vehical/:id            -retriv vehical id through
+http://localhost:3000/api/vehical/:id            -update
+http://localhost:3000/api/vehical/:id            -delete
+
+SLOT.........................
+http://localhost:3000/api/slot/add            -add slot
+http://localhost:3000/api/slot/:parkingId     -retrive slot parking id
+http://localhost:3000/api/slot/:id            -retrive parking slot detail
+http://localhost:3000/api/slot/:id            -update slot
+http://localhost:3000/api/slot/:id            -delete slot
+
+RSERVATION...................
+http://localhost:3000/api/reservation/add         -add reservation
+http://localhost:3000/api/reservation/:userId     -retrive reservation id through
+http://localhost:3000/api/reservation/:id         -retrive reservation detail
+http://localhost:3000/api/reservation/:id         -update reservation
+http://localhost:3000/api/reservation/:id         -delete reservation
+
+ADDPARKER....................
+http://localhost:3000/api/parker/add                     -add parker
+http://localhost:3000/api/parker/all                     -get all parker
+http://localhost:3000/api/parker/:id                     -retrive parker id through
+http://localhost:3000/api/parker/:id                     -update parker
+http://localhost:3000/api/parker/checkout/:id            -check out parker
+http://localhost:3000/api/parker//calculate-fee            -check out parker
+http://localhost:3000/api/parker/:id                     -delete parker
+
+LOCATION.....................
+http://localhost:3000/api/location/add                     -add location
+http://localhost:3000/api/location/all                     -get all location
+http://localhost:3000/api/location/:id                     -retrive location id through
+http://localhost:3000/api/location/:id                     -update location
+http://localhost:3000/api/location/:id                     -delete location
+
+PARKING.......................
+http://localhost:3000/api/parking/add                     -add parking
+http://localhost:3000/api/parking/all                     -get all parking
+http://localhost:3000/api/parking/:id                     -retrive parking id through
+http://localhost:3000/api/parking/:id                     -update parking
+http://localhost:3000/api/parking/:id                     -delete parking
