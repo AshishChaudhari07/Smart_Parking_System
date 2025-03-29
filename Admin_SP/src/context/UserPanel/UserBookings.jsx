@@ -1,67 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaDollarSign, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import axios from "axios";
 
 const UserBookings = () => {
-  // Dummy data for bookings
-  const bookings = [
-    {
-      id: 1,
-      location: "City Center Parking",
-      date: "March 20, 2025",
-      time: "10:00 AM - 2:00 PM",
-      price: "$10",
-      status: "Upcoming",
-    },
-    {
-      id: 2,
-      location: "Downtown Garage",
-      date: "March 12, 2025",
-      time: "3:00 PM - 5:00 PM",
-      price: "$6",
-      status: "Completed",
-    },
-    {
-      id: 3,
-      location: "Mall Parking Zone",
-      date: "March 10, 2025",
-      time: "12:00 PM - 4:00 PM",
-      price: "$8",
-      status: "Cancelled",
-    },
-  ];
+  const [bookings, setBookings] = useState([]);
+
+  const allBooking = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (!storedUser || !storedUser._id) {
+        console.error("User ID is missing in localStorage!");
+        return;
+      }
+
+      const userId = storedUser._id;
+      console.log("User ID from localStorage:", userId);
+
+      const response = await axios.get(`http://localhost:3000/api/reservation/user/${userId}`,  {
+        headers: { Authorization: `Bearer ${token}` }, // Fixed missing "Bearer "
+      });
+
+      setBookings(response.data);
+      console.log(response.data.locationId);
+      console.log("Fetched bookings:", response.data);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  };
+
+  useEffect(() => {
+    allBooking();
+  }, []);
 
   return (
     <div className="p-6 min-h-screen bg-gray-100">
-      {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800">My Bookings 📅</h1>
         <p className="text-gray-600">Manage and track your parking bookings.</p>
       </div>
 
-      {/* Booking List */}
       <div className="space-y-4">
         {bookings.map((booking) => (
-          <div
-            key={booking.id}
-            className="p-4 bg-white shadow-md rounded-lg flex items-center justify-between"
-          >
+          <div key={booking._id} className="p-4 bg-white shadow-md rounded-lg flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <FaMapMarkerAlt className="text-blue-500 text-3xl" />
               <div>
-                <h3 className="text-lg font-semibold text-gray-700">{booking.location}</h3>
+                <h3 className="text-lg font-semibold text-gray-700">{booking.locationId?.locationName || "N/A"}</h3>
                 <p className="text-gray-500 flex items-center">
                   <FaCalendarAlt className="mr-2 text-gray-400" /> {booking.date}
                 </p>
                 <p className="text-gray-500 flex items-center">
-                  <FaClock className="mr-2 text-gray-400" /> {booking.time}
+                  <FaClock className="mr-2 text-gray-400" /> {booking.startTime} to {booking.endTime}
                 </p>
                 <p className="text-green-600 flex items-center font-semibold">
-                  <FaDollarSign className="mr-1" /> {booking.price}
+                  <FaDollarSign className="mr-1" /> {booking.amountPaid}
                 </p>
               </div>
             </div>
 
-            {/* Status Indicator */}
             <div className="flex items-center space-x-4">
               {booking.status === "Upcoming" && (
                 <span className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-md font-semibold">
@@ -82,7 +81,7 @@ const UserBookings = () => {
           </div>
         ))}
       </div>
-    </div>
+    </div>  
   );
 };
 

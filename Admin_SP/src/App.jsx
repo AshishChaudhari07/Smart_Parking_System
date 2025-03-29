@@ -34,7 +34,7 @@ import SecurityLiveMonitoring from "./context/SecurityPanel/SecurityLiveMonitori
 import SecurityReports from "./context/SecurityPanel/SecurityReports";
 import SecurityEmergency from "./context/SecurityPanel/SecurityEmergency";
 import SecuritySettings from "./context/SecurityPanel/SecuritySettings";
-import MyBookings from "./context/UserPanel/MyBookings";
+import Book from "./context/UserPanel/Book";
 
 
 
@@ -78,12 +78,14 @@ function App() {
                 <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-0"} w-full`}>
                     <Routes>
                         {/* Authentication Routes */}
+                        { !userRole ? <Route path='/'element={<Navigate to='/login' />} /> : ""}
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
 
                         {/* Admin Routes */}
                         {userRole === "Admin" && (
                             <Route path="" element={<PrivateRoute />}>
+                                <Route path='/'element={<Navigate to='/admin/dashboard' />} />
                                 <Route path="/admin/dashboard" element={<Dashboard />} />
                                 <Route path="/admin/manage-users" element={<ManageUsers />} />
                                 <Route path="/admin/parking-locations" element={<ParkingLocations />} />
@@ -96,6 +98,7 @@ function App() {
                         {/* Parking Owner Routes */}
                         {userRole === "ParkingOwner" && (
                             <Route path="" element={<PrivateRoute />}>
+                                <Route path='/'element={<Navigate to='/owner/dashboard' />} />
                                 <Route path="/owner/dashboard" element={<OwnerDashboard />} />
                                 <Route path="/owner/slots" element={<ManageParkingSlots />} />
                                 <Route path="/owner/bookings" element={<OwnerBookings />} />
@@ -109,8 +112,9 @@ function App() {
                         {/* User Sidebar route */}
                         {userRole === "User" && (
                             <Route path="" element={<PrivateRoute />}>
+                                <Route path='/'element={<Navigate to='/user/dashboard' />} />
                                 <Route path="/user/dashboard" element={<UserDashboard />} />
-                                <Route path="/my-bookings" element={<MyBookings />} />
+                                <Route path="/user/book" element={<Book />} />
                                 <Route path="/user/find-parking" element={<FindParking />} />
                                 <Route path="/user/bookings" element={<UserBookings />} />
                                 <Route path="/user/payments" element={<UserPayments />} />
@@ -123,6 +127,7 @@ function App() {
                         {/* Security sidebar route */}
                         {userRole === "Security" && (
                             <Route path="" element={<PrivateRoute />}>
+                                <Route path='/'element={<Navigate to='/security/checkin-out' />} />
                                 <Route path="/security/checkin-out" element={<SecurityCheckInOut />} />
                                 <Route path="/security/live-monitoring" element={<SecurityLiveMonitoring />} />
                                 <Route path="/security/reports" element={<SecurityReports />} />

@@ -12,7 +12,6 @@ const Signup = () => {
         contactNum: "",
         email: "",
         password: "",
-        role: "User",
     });
 
     const [error, setError] = useState("");
@@ -121,20 +120,6 @@ const Signup = () => {
                             onChange={handleChange}
                             required
                         />
-                    </div>
-
-                    <div>
-                        <label className="block text-gray-600 font-medium">Role</label>
-                        <select
-                            name="role"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            onChange={handleChange}
-                        >
-                            <option value="User">User</option>
-                            <option value="Admin">Admin</option>
-                            <option value="ParkingOwner">Parking Owner</option>
-                            <option value="Security">Security</option>
-                        </select>
                     </div>
 
                     <button

@@ -16,7 +16,7 @@ export const addParking = async (req, res) => {
 // Get all Parking Locations
 export const getAllParking = async (req, res) => {
     try {
-        const parkings = await Parking.find();
+        const parkings = await Parking.find()
         res.status(200).json({ success: true, parkings });
     } catch (error) {
         console.error("Error fetching parking locations:", error);

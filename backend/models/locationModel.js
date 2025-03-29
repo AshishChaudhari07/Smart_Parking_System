@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const LocationSchema = new mongoose.Schema({
-    locationId: { type: mongoose.Schema.Types.ObjectId, auto: true },
+    // locationId: { type: mongoose.Schema.Types.ObjectId, auto: true },
     state: { type: String, required: true },
     city: { type: String, required: true },
     area: { type: String, required: true },

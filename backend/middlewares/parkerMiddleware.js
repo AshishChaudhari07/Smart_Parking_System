@@ -7,7 +7,7 @@ export const verifyToken = async (req, res, next) => {
         const token = req.header("Authorization");
         if (!token) return res.status(403).json({ message: "Access Denied" });
 
-        const verified = jwt.verify(token, "my_secret_key");
+        const verified = jwt.verify(token, "my_secret_key", { expiresIn: "240d" });
         req.user = verified;
         next();
     } catch (error) {

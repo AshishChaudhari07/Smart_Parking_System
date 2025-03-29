@@ -26,7 +26,7 @@ const UserSettings = () => {
       <div className="bg-white shadow-md rounded-lg p-6 flex items-center space-x-6 mb-6">
         <FaUserCircle className="text-gray-500 text-6xl" />
         <div>
-          <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
+          <h2 className="text-xl font-semibold text-gray-800">{user.firstName} {user.lastName}</h2>
           <p className="text-gray-600">{user.email}</p>
         </div>
       </div>

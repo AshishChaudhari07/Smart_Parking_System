@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCalendarCheck, FaMoneyBillWave, FaHeart, FaMapMarkedAlt, FaSearch } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -21,9 +21,11 @@ const UserDashboard = () => {
         const paymentsRes = await axios.get("http://localhost:3000/api/payments");
         setPayments(paymentsRes.data);
 
-        // Fetch user favorite parking spots
-        // const favoritesRes = await axios.get("http://localhost:5000/api/favorites/user/USER_ID");
-        // setFavorites(favoritesRes.data || []);
+        // Fetch user favorites
+        const favoritesRes = await axios.get("http://localhost:3000/api/favorites/favorites", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } // Ensure authorization
+        });
+        setFavorites(favoritesRes.data);
 
       } catch (error) {
         console.error("Error fetching data", error);
@@ -32,10 +34,6 @@ const UserDashboard = () => {
 
     fetchData();
   }, []);
-
-  const handleViewBookings = () => {
-    navigate("/my-bookings");
-  };
 
   return (
     <div className="p-6 min-h-screen bg-gray-100">
@@ -82,10 +80,10 @@ const UserDashboard = () => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
         <div className="flex space-x-4">
           <button className="flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
-            <FaSearch className="mr-2" /> Find Parking
+            <FaSearch className="mr-2" /> <Link to='/user/find-parking'>Find Parking</Link>
           </button>
-          <button onClick={handleViewBookings} className="flex items-center px-6 py-3 bg-gray-700 text-white rounded-lg shadow-md hover:bg-gray-800 transition">
-            <FaCalendarCheck className="mr-2" /> View My Bookings
+          <button className="flex items-center px-6 py-3 bg-gray-700 text-white rounded-lg shadow-md hover:bg-gray-800 transition">
+            <FaCalendarCheck className="mr-2" /> <Link to='/user/bookings'>View My Bookings</Link>
           </button>
         </div>
       </div>
