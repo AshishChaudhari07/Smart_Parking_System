@@ -14,7 +14,6 @@ const Reservations = () => {
             const response = await axios.get("http://localhost:3000/api/reservation/all", {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log(response.data);
             setReservations(response.data);
         } catch (error) {
             console.error("Error fetching reservations:", error.response?.data || error.message);
@@ -43,55 +42,63 @@ const Reservations = () => {
     }, []);
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
-            <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold text-gray-800">Reservations</h1>
+        <div className="p-8 bg-gradient-to-br from-blue-600 to-indigo-700 min-h-screen text-white">
+            {/* Header */}
+            <div className="mb-6">
+                <h1 className="text-4xl font-bold">Reservations</h1>
+                <p className="text-lg text-gray-200">View and manage parking reservations.</p>
             </div>
-            <p className="mt-2 text-gray-600">View and manage parking reservations.</p>
 
-            <div className="mt-4 flex items-center bg-white p-2 rounded-lg shadow-md">
-                <FaSearch className="text-gray-500 ml-2" />
+            {/* Search Bar */}
+            <div className="flex bg-white rounded-lg shadow-lg p-2 mb-6">
+                <FaSearch className="text-gray-500 ml-3" />
                 <input 
                     type="text" 
                     placeholder="Search by user name..." 
-                    className="w-full p-2 outline-none" 
+                    className="w-full p-3 outline-none text-gray-700 bg-transparent"
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
 
-            <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">Reservation List</h2>
+            {/* Reservation List */}
+            <div className="bg-white p-6 rounded-lg shadow-xl text-gray-800">
+                <h2 className="text-2xl font-semibold mb-4">Reservation List</h2>
 
                 {loading ? (
                     <p className="text-gray-600">Loading reservations...</p>
                 ) : (
                     <div className="overflow-x-auto">
-                        <table className="w-full border-collapse border border-gray-200">
+                        <table className="w-full border-collapse border border-gray-200 rounded-lg">
                             <thead>
-                                <tr className="bg-gray-200 text-gray-700">
-                                    <th className="border p-2">User</th>
-                                    <th className="border p-2">Vehicle</th>
-                                    <th className="border p-2">Slot</th>
-                                    <th className="border p-2">Date</th>
-                                    <th className="border p-2">Start Time</th>
-                                    <th className="border p-2">End Time</th>
-                                    <th className="border p-2">Status</th>
-                                    <th className="border p-2">Actions</th>
+                                <tr className="bg-blue-500 text-white">
+                                    <th className="border p-3">User</th>
+                                    <th className="border p-3">Vehicle</th>
+                                    <th className="border p-3">Slot</th>
+                                    <th className="border p-3">Date</th>
+                                    <th className="border p-3">Start Time</th>
+                                    <th className="border p-3">End Time</th>
+                                    <th className="border p-3">Status</th>
+                                    <th className="border p-3">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {reservations
                                     .filter(res => res.userId?.firstName?.toLowerCase().includes(search.toLowerCase()))
-                                    .map(res => (
-                                        <tr key={res._id} className="text-center">
-                                            <td className="border p-2">{res.userId?.firstName} {res.userId?.lastName}</td>
-                                            <td className="border p-2">{res.vehicleId?.vehicleType}</td>
-                                            <td className="border p-2">{res.parkingSlotId?.parkingTag}</td>
-                                            <td className="border p-2">{res.date}</td>
-                                            <td className="border p-2">{res.startTime}</td>
-                                            <td className="border p-2">{res.endTime}</td>
-                                            <td className="border p-2">
-                                                <span className={`px-3 py-1 text-sm font-semibold rounded-lg ${
+                                    .map((res, index) => (
+                                        <tr 
+                                            key={res._id} 
+                                            className={`text-center transition-all ${
+                                                index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                                            } hover:bg-gray-200`}
+                                        >
+                                            <td className="border p-3">{res.userId?.firstName} {res.userId?.lastName}</td>
+                                            <td className="border p-3">{res.vehicleId?.vehicleType}</td>
+                                            <td className="border p-3">{res.parkingSlotId?.parkingTag}</td>
+                                            <td className="border p-3">{res.date}</td>
+                                            <td className="border p-3">{res.startTime}</td>
+                                            <td className="border p-3">{res.endTime}</td>
+                                            <td className="border p-3">
+                                                <span className={`px-3 py-1 text-sm font-semibold rounded-lg shadow-md ${
                                                     res.paymentStatus === "Confirmed" ? "bg-green-500 text-white" :
                                                     res.paymentStatus === "Pending" ? "bg-yellow-500 text-white" :
                                                     res.paymentStatus === "Completed" ? "bg-blue-500 text-white" :
@@ -100,13 +107,13 @@ const Reservations = () => {
                                                     {res.paymentStatus}
                                                 </span>
                                             </td>
-                                            <td className="border p-2 flex justify-center space-x-4">
-                                                <button className="text-blue-500 hover:text-blue-700">
+                                            <td className="border p-3 flex justify-center space-x-4">
+                                                <button className="text-blue-500 hover:text-blue-700 transition-all">
                                                     <FaEye />
                                                 </button>
                                                 {res.paymentStatus !== "Canceled" && (
                                                     <button 
-                                                        className="text-red-500 hover:text-red-700"
+                                                        className="text-red-500 hover:text-red-700 transition-all"
                                                         onClick={() => handleCancel(res._id)}
                                                     >
                                                         <FaTimesCircle />

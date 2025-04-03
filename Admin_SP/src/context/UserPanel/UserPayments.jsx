@@ -28,7 +28,7 @@ const UserPayments = () => {
   ];
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Payment History 💳</h1>
@@ -36,7 +36,7 @@ const UserPayments = () => {
       </div>
 
       {/* Payment List */}
-      <div className="space-y-4">
+      <div className="space-y-4 ">
         {payments.map((payment) => (
           <div
             key={payment.id}

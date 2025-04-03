@@ -24,7 +24,7 @@ const SecurityLiveMonitoring = () => {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-500 p-6">
             {/* Card Container */}
             <div className="bg-white bg-opacity-10 backdrop-blur-lg shadow-2xl rounded-2xl p-8 w-full max-w-md text-center border-t-4 border-blue-500 relative">
                 {/* Live Time Display */}
@@ -44,7 +44,7 @@ const SecurityLiveMonitoring = () => {
                         autoPlay
                         loop
                         muted
-                        src="https://www.w3schools.com/html/mov_bbb.mp4" // Sample Video Placeholder
+                        src="https://www.shutterstock.com/shutterstock/videos/1082422300/preview/stock-footage-cctv-cars-parking-in-urban-area.webm" // Sample Video Placeholder
                     />
 
                     {/* Motion Detection Alert */}

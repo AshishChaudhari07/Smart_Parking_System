@@ -19,7 +19,7 @@ const UserSupport = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-r from-blue-50 to-gray-100">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
       {/* Header */}
       <div className="mb-6 text-center">
         <h1 className="text-4xl font-extrabold text-gray-800 flex justify-center items-center gap-2">

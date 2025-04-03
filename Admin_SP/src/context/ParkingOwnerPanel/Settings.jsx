@@ -3,7 +3,7 @@ import { FaUser, FaLock, FaBell, FaMoon, FaSun, FaCheckCircle } from "react-icon
 
 const Settings = () => {
     // State for theme toggle and notifications
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
     const [notifications, setNotifications] = useState(true);
 
     return (

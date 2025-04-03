@@ -12,19 +12,15 @@ const OwnerDashboard = () => {
             try {
                 const response = await axios.get("http://localhost:3000/api/user/all");
                 const data = response.data;
-                setRecentBookings(data)
-                console.log(data)
+                setRecentBookings(data);
 
                 // Set the stats dynamically
                 setStats([
-                    { title: "Total Bookings", value: data.length, icon: <FaClipboardList />, color: "bg-blue-500" },
-                    { title: "Available Slots", value: data.availableSlots || "87", icon: <FaParking />, color: "bg-green-500" },
+                    { title: "Total Bookings", value: data.length, icon: <FaClipboardList />, color: "bg-blue-600" },
+                    { title: "Available Slots", value: data.availableSlots || "87", icon: <FaParking />, color: "bg-green-600" },
                     { title: "Revenue", value: "$12,540", icon: <FaMoneyBillWave />, color: "bg-yellow-500" },
                     { title: "Total Parking Slots", value: data.totalSlots || "100", icon: <FaCar />, color: "bg-red-500" },
                 ]);
-
-                // Set recent bookings
-                // setRecentBookings(data.recentBookings);
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             }
@@ -34,21 +30,21 @@ const OwnerDashboard = () => {
     }, []);
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div className="p-6 min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 text-white">
             {/* Header */}
-            <h2 className="text-3xl font-bold text-gray-800">Owner Dashboard</h2>
-            <p className="text-gray-500">Manage your parking business efficiently.</p>
+            <h2 className="text-4xl font-bold">Owner Dashboard</h2>
+            <p className="text-lg text-gray-200">Manage your parking business efficiently.</p>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
                 {stats.map((stat, index) => (
                     <div
                         key={index}
-                        className={`p-6 rounded-xl shadow-md text-white ${stat.color} flex items-center space-x-4`}
+                        className={`p-6 rounded-xl shadow-lg text-white ${stat.color} flex items-center space-x-4 transition transform hover:scale-105 bg-opacity-90 backdrop-blur-md`}
                     >
-                        <div className="text-3xl">{stat.icon}</div>
+                        <div className="text-4xl">{stat.icon}</div>
                         <div>
-                            <h3 className="text-xl font-semibold">{stat.value}</h3>
+                            <h3 className="text-2xl font-bold">{stat.value}</h3>
                             <p className="text-sm">{stat.title}</p>
                         </div>
                     </div>
@@ -56,34 +52,51 @@ const OwnerDashboard = () => {
             </div>
 
             {/* Recent Bookings */}
-            <div className="mt-8 bg-white shadow-md rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Recent Bookings</h3>
+            <div className="mt-8 bg-white bg-opacity-30 backdrop-blur-lg shadow-2xl rounded-xl p-6">
+                {/* Section Title */}
+                <h3 className="text-3xl font-bold text-gray-700 mb-5 tracking-wide drop-shadow-md">Recent Bookings</h3>
+
                 <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                        <thead>
-                            <tr className="bg-gray-200 text-gray-600 text-left">
-                                <th className="p-3">User</th>
-                                <th className="p-3">Email</th>
-                                <th className="p-3">Date</th>
-                                <th className="p-3">Amount</th>
+                    <table className="w-full border-collapse text-white shadow-xl rounded-lg overflow-hidden">
+                        {/* Table Header */}
+                        <thead className="bg-black bg-opacity-50 backdrop-blur-xl text-gray-200 text-lg uppercase tracking-wider">
+                            <tr>
+                                <th className="p-4 text-left">User</th>
+                                <th className="p-4 text-left">Email</th>
+                                <th className="p-4 text-left">Date</th>
+                                <th className="p-4 text-left">Amount</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {recentBookings?.map((booking) => (
-                                <tr key={booking.id} className="border-b hover:bg-gray-100">
-                                    <td className="p-3">{booking.firstName}</td>
-                                    <td className="p-3">{booking.email}</td>
-                                    <td className="p-3">{booking.createdAt}</td>
-                                    <td className="p-3 text-green-500">${booking.securityAmount}</td>
+
+                        {/* Table Body */}
+                        <tbody className="bg-gray-800 bg-opacity-40 backdrop-blur-md text-white">
+                            {recentBookings?.length === 0 ? (
+                                <tr>
+                                    <td colSpan="4" className="p-5 text-center text-gray-300 text-lg">No bookings available</td>
                                 </tr>
-                            ))}
+                            ) : (
+                                recentBookings?.map((booking, index) => (
+                                    <tr
+                                        key={booking.id}
+                                        className={`border-b border-gray-700 transition-all duration-300 
+                            ${index % 2 === 0 ? "bg-gray-900 bg-opacity-30" : "bg-gray-800 bg-opacity-20"} 
+                            hover:bg-gray-700 hover:bg-opacity-50 hover:shadow-lg hover:scale-[1.02]`}
+                                    >
+                                        <td className="p-5 text-lg font-medium">{booking.firstName || "N/A"}</td>
+                                        <td className="p-5 text-gray-300">{booking.email || "N/A"}</td>
+                                        <td className="p-5">{booking.createdAt ? new Date(booking.createdAt).toLocaleDateString() : "N/A"}</td>
+                                        <td className="p-5 text-green-400 font-semibold">${booking.securityAmount || "0.00"}</td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
             </div>
 
+
             {/* Placeholder for Future Charts */}
-            <div className="mt-8 bg-white shadow-md rounded-lg p-6 text-center text-gray-500">
+            <div className="mt-8 bg-white bg-opacity-20 backdrop-blur-md shadow-lg rounded-lg p-6 text-center text-gray-700">
                 📊 Analytics & Charts will be displayed here (Integrate charts later).
             </div>
         </div>
@@ -91,101 +104,3 @@ const OwnerDashboard = () => {
 };
 
 export default OwnerDashboard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import { FaCar, FaMoneyBillWave, FaClipboardList, FaParking } from "react-icons/fa";
-
-// const OwnerDashboard = () => {
-//     // Example data (replace with real API data)
-    
-//     const stats = [
-//         { title: "Total Bookings", value: "1,250", icon: <FaClipboardList />, color: "bg-blue-500" },
-//         { title: "Available Slots", value: "87", icon: <FaParking />, color: "bg-green-500" },
-//         { title: "Revenue", value: "$12,540", icon: <FaMoneyBillWave />, color: "bg-yellow-500" },
-//         { title: "Total Parking Slots", value: "300", icon: <FaCar />, color: "bg-red-500" },
-//     ];
-
-//     const recentBookings = [
-//         { id: 1, user: "John Doe", slot: "A12", date: "15 Mar 2025", amount: "$10" },
-//         { id: 2, user: "Alice Smith", slot: "B5", date: "14 Mar 2025", amount: "$8" },
-//         { id: 3, user: "Michael Brown", slot: "C7", date: "14 Mar 2025", amount: "$12" },
-//         { id: 4, user: "Emily Davis", slot: "D2", date: "13 Mar 2025", amount: "$9" },
-//     ];
-
-//     return (
-//         <div className="p-6 bg-gray-100 min-h-screen">
-//             {/* Header */}
-//             <h2 className="text-3xl font-bold text-gray-800">Owner Dashboard</h2>
-//             <p className="text-gray-500">Manage your parking business efficiently.</p>
-
-//             {/* Stats Cards */}
-//             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-//                 {stats.map((stat, index) => (
-//                     <div
-//                         key={index}
-//                         className={`p-6 rounded-xl shadow-md text-white ${stat.color} flex items-center space-x-4`}
-//                     >
-//                         <div className="text-3xl">{stat.icon}</div>
-//                         <div>
-//                             <h3 className="text-xl font-semibold">{stat.value}</h3>
-//                             <p className="text-sm">{stat.title}</p>
-//                         </div>
-//                     </div>
-//                 ))}
-//             </div>
-
-//             {/* Recent Bookings */}
-//             <div className="mt-8 bg-white shadow-md rounded-lg p-6">
-//                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Recent Bookings</h3>
-//                 <div className="overflow-x-auto">
-//                     <table className="w-full border-collapse">
-//                         <thead>
-//                             <tr className="bg-gray-200 text-gray-600 text-left">
-//                                 <th className="p-3">User</th>
-//                                 <th className="p-3">Slot</th>
-//                                 <th className="p-3">Date</th>
-//                                 <th className="p-3">Amount</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             {recentBookings.map((booking) => (
-//                                 <tr key={booking.id} className="border-b hover:bg-gray-100">
-//                                     <td className="p-3">{booking.user}</td>
-//                                     <td className="p-3">{booking.slot}</td>
-//                                     <td className="p-3">{booking.date}</td>
-//                                     <td className="p-3 text-green-500">{booking.amount}</td>
-//                                 </tr>
-//                             ))}
-//                         </tbody>
-//                     </table>
-//                 </div>
-//             </div>
-
-//             {/* Placeholder for Future Charts */}
-//             <div className="mt-8 bg-white shadow-md rounded-lg p-6 text-center text-gray-500">
-//                 📊 Analytics & Charts will be displayed here (Integrate charts later).
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default OwnerDashboard;

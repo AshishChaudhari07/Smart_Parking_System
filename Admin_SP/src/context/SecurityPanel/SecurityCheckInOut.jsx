@@ -14,15 +14,15 @@ const SecurityCheckInOut = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-            {/* Card Container */}
-            <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md text-center border-t-4 border-blue-500">
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">Security Check-In/Out</h2>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-purple-500 p-6">
+            {/* Glassmorphism Card */}
+            <div className="bg-white bg-opacity-10 backdrop-blur-md shadow-2xl rounded-2xl p-8 w-full max-w-md text-center border border-gray-200">
+                <h2 className="text-3xl font-bold text-gray-700 drop-shadow-lg mb-6">Security Check-In/Out</h2>
 
                 {/* Status Display */}
                 <div
-                    className={`p-4 flex items-center justify-center text-white font-semibold text-lg rounded-lg transition duration-300 ${
-                        isCheckedIn ? "bg-green-500" : "bg-red-500"
+                    className={`p-4 flex items-center justify-center font-semibold text-lg rounded-lg transition duration-300 shadow-md ${
+                        isCheckedIn ? "bg-green-500 text-white" : "bg-red-500 text-white"
                     }`}
                 >
                     {isCheckedIn ? (
@@ -41,26 +41,26 @@ const SecurityCheckInOut = () => {
                 {/* Check-In/Out Button */}
                 <button
                     onClick={handleToggleCheck}
-                    className={`mt-6 px-6 py-3 text-white font-semibold rounded-full shadow-lg transform transition-all duration-300 ${
-                        isCheckedIn ? "bg-red-600 hover:bg-red-700 scale-105" : "bg-green-600 hover:bg-green-700 scale-105"
+                    className={`mt-6 px-6 py-3 text-white font-semibold rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 ${
+                        isCheckedIn ? "bg-red-600 hover:bg-red-700" : "bg-green-600 hover:bg-green-700"
                     }`}
                 >
                     {isCheckedIn ? "Check Out" : "Check In"}
                 </button>
 
                 {/* Activity Log */}
-                <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-inner max-h-60 overflow-y-auto">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Activity Log:</h3>
+                <div className="mt-6 p-4 bg-white bg-opacity-20 backdrop-blur-lg rounded-lg shadow-inner max-h-60 overflow-y-auto">
+                    <h3 className="text-lg font-semibold text-white mb-2">Activity Log:</h3>
                     {log.length === 0 ? (
-                        <p className="text-gray-500 italic">No records yet.</p>
+                        <p className="text-gray-600 italic">No records yet.</p>
                     ) : (
-                        <ul className="text-gray-700 text-sm space-y-2">
+                        <ul className="text-white text-sm space-y-2">
                             {log.map((entry, index) => (
-                                <li key={index} className="flex justify-between items-center border-b pb-2">
-                                    <span className={entry.action === "Checked In" ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
+                                <li key={index} className="flex justify-between items-center border-b border-gray-300 pb-2">
+                                    <span className={entry.action === "Checked In" ? "text-green-300 font-semibold" : "text-red-300 font-semibold"}>
                                         {entry.action}
                                     </span>
-                                    <span className="text-gray-500">{entry.timestamp}</span>
+                                    <span className="text-gray-200">{entry.timestamp}</span>
                                 </li>
                             ))}
                         </ul>

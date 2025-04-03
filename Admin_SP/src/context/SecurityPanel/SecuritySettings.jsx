@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaUserShield, FaLock, FaBell, FaMoon, FaSun } from "react-icons/fa";
 
 const SecuritySettings = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
     const [notifications, setNotifications] = useState(true);
 
     return (

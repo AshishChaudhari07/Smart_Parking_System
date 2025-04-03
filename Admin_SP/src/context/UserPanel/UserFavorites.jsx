@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaHeart, FaMapMarkerAlt, FaStar, FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const UserFavorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -15,10 +17,9 @@ const UserFavorites = () => {
       }
 
       const res = await axios.get("http://localhost:3000/api/favorites/favorites", {
-        headers: { Authorization: `Bearer ${token}` }, // Added "Bearer " prefix
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("Fetched favorites:", res.data);
       setFavorites(res.data);
     } catch (error) {
       console.error("Error fetching favorites:", error.response?.data || error.message);
@@ -36,18 +37,17 @@ const UserFavorites = () => {
       if (!token) return;
 
       await axios.delete(`http://localhost:3000/api/favorites/favorites/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }, // Fixed missing "Bearer "
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      setFavorites((prev) => prev.filter((fav) => fav._id !== id)); // Update UI smoothly
+      setFavorites((prev) => prev.filter((fav) => fav._id !== id));
     } catch (error) {
       console.error("Error removing favorite:", error.response?.data || error.message);
     }
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100">
-      {/* Header */}
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-gray-800 flex items-center">
           <FaHeart className="text-red-500 mr-2" /> Favorite Parking Spots
@@ -55,22 +55,32 @@ const UserFavorites = () => {
         <p className="text-gray-600">Easily access your preferred locations.</p>
       </div>
 
-      {/* Favorites List */}
-      <div className="space-y-4">
-        {favorites.length === 0 ? (
-          <p className="text-gray-500">No favorite spots yet.</p>
-        ) : (
-          favorites.map((fav) => {
-            const location = fav.locationId || {}; // Ensure locationId is not null/undefined
+      {favorites.length === 0 ? (
+        <div className="text-center py-10">
+          <p className="text-gray-500 text-lg">No favorite spots yet.</p>
+          <Link
+            to="/user/find-parking"
+            className="mt-4 inline-block bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+          >
+            Discover Parking Spots
+          </Link>
+        </div>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {favorites.map((fav) => {
+            const location = fav.locationId || {};
             return (
-              <div key={fav._id} className="p-4 bg-white shadow-md rounded-lg flex items-center justify-between">
-                {/* Location Details */}
+              <motion.div
+                key={fav._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="p-4 bg-white shadow-xl rounded-lg flex justify-between items-center transition-transform hover:scale-105"
+              >
                 <div className="flex items-center space-x-4">
                   <FaMapMarkerAlt className="text-blue-500 text-3xl" />
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-700">
-                      {location.locationName || "Unknown Location"}
-                    </h3>
+                    <h3 className="text-lg font-semibold text-gray-700">{location.locationName || "Unknown Location"}</h3>
                     <p className="text-gray-500">{location.distance || "1 KM"} away</p>
                     <p className="text-yellow-500 flex items-center">
                       <FaStar className="mr-1" /> {location.rating || "4.6"}
@@ -78,18 +88,19 @@ const UserFavorites = () => {
                   </div>
                 </div>
 
-                {/* Remove from Favorites Button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
                   className="text-red-500 hover:text-red-700 transition"
                   onClick={() => removeFavorite(fav._id)}
                 >
                   <FaTrashAlt size={20} />
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 };
