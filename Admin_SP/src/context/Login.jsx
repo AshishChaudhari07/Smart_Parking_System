@@ -36,13 +36,13 @@ const Login = () => {
                 navigate("/admin/dashboard");
                 window.location.reload();
             } else if (user.role === "ParkingOwner") {
-                navigate("/parking-owner-dashboard");
+                navigate("/owner/dashboard");
                 window.location.reload();
             } else if (user.role === "Security") {
-                navigate("/security-dashboard");
+                navigate("/security/checkin-out");
                 window.location.reload();
             } else {
-                navigate("/dashboard");
+                navigate("/user/dashboard");
                 window.location.reload();
             }
         } catch (err) {

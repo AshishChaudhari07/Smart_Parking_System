@@ -98,7 +98,6 @@ function App() {
                         {/* Parking Owner Routes */}
                         {userRole === "ParkingOwner" && (
                             <Route path="" element={<PrivateRoute />}>
-                                <Route path='/'element={<Navigate to='/owner/dashboard' />} />
                                 <Route path="/owner/dashboard" element={<OwnerDashboard />} />
                                 <Route path="/owner/slots" element={<ManageParkingSlots />} />
                                 <Route path="/owner/bookings" element={<OwnerBookings />} />
@@ -112,7 +111,6 @@ function App() {
                         {/* User Sidebar route */}
                         {userRole === "User" && (
                             <Route path="" element={<PrivateRoute />}>
-                                <Route path='/'element={<Navigate to='/user/dashboard' />} />
                                 <Route path="/user/dashboard" element={<UserDashboard />} />
                                 <Route path="/user/book" element={<Book />} />
                                 <Route path="/user/find-parking" element={<FindParking />} />
@@ -127,7 +125,6 @@ function App() {
                         {/* Security sidebar route */}
                         {userRole === "Security" && (
                             <Route path="" element={<PrivateRoute />}>
-                                <Route path='/'element={<Navigate to='/security/checkin-out' />} />
                                 <Route path="/security/checkin-out" element={<SecurityCheckInOut />} />
                                 <Route path="/security/live-monitoring" element={<SecurityLiveMonitoring />} />
                                 <Route path="/security/reports" element={<SecurityReports />} />
