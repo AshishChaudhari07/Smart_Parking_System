@@ -33,7 +33,7 @@ const ParkingOwnerSidebar = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setIsAuthenticated(false);
-        navigate("/home");
+        navigate("/");
         window.location.reload();
     };
 

@@ -82,7 +82,7 @@ function App() {
                 <div className={mainContentClass}>
                     <Routes>
                         {/* Authentication Routes */}
-                        {!userRole && <Route path="/home" element={<Layout />} />}
+                        {!userRole && <Route path="/" element={<Layout />} />}
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
 
