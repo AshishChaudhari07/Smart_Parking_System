@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, enum: ['Admin', 'Security', 'User', 'ParkingOwner'], default:'User', required: true },
     otp: { type: String },
-    securityAmount: { type: Number, default: 0 }
+    securityAmount: { type: Number, default: 0 },
+    profileImage: { type: String },
 }, { timestamps: true });
 
 const User = mongoose.model('User', UserSchema);

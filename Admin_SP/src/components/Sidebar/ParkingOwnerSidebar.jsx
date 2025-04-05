@@ -33,7 +33,8 @@ const ParkingOwnerSidebar = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setIsAuthenticated(false);
-        navigate("/login");
+        navigate("/home");
+        window.location.reload();
     };
 
     // Sidebar Menu Items

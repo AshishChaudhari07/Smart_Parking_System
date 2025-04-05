@@ -23,8 +23,9 @@ const SecuritySidebar = () => {
     // Logout Function
     const handleLogout = () => {
         localStorage.removeItem("token");
-        localStorage.removeItem("security");
-        navigate("/login");
+        localStorage.removeItem("user");
+        navigate("/home");
+        window.location.reload();
     };
 
     // Sidebar Menu Items

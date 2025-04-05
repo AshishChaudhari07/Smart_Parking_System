@@ -35,6 +35,7 @@ import SecurityReports from "./context/SecurityPanel/SecurityReports";
 import SecurityEmergency from "./context/SecurityPanel/SecurityEmergency";
 import SecuritySettings from "./context/SecurityPanel/SecuritySettings";
 import Book from "./context/UserPanel/Book";
+import Layout from "./layouts/Layout";
 
 
 
@@ -63,6 +64,9 @@ function App() {
         return <div className="flex h-screen items-center justify-center text-lg">Loading...</div>;
     }
 
+    const mainContentClass = !userRole
+        ? "flex-1 p-6 w-full"
+        : `flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-0"} w-full`;
 
     return (
         <Router>
@@ -75,17 +79,17 @@ function App() {
                 {userRole === "Security" && <SecuritySidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />}
 
                 {/* Main Content */}
-                <div className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-0"} w-full`}>
+                <div className={mainContentClass}>
                     <Routes>
                         {/* Authentication Routes */}
-                        { !userRole ? <Route path='/'element={<Navigate to='/login' />} /> : ""}
+                        {!userRole && <Route path="/home" element={<Layout />} />}
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
 
                         {/* Admin Routes */}
                         {userRole === "Admin" && (
                             <Route path="" element={<PrivateRoute />}>
-                                <Route path='/'element={<Navigate to='/admin/dashboard' />} />
+                                <Route path='/' element={<Navigate to='/admin/dashboard' />} />
                                 <Route path="/admin/dashboard" element={<Dashboard />} />
                                 <Route path="/admin/manage-users" element={<ManageUsers />} />
                                 <Route path="/admin/parking-locations" element={<ParkingLocations />} />

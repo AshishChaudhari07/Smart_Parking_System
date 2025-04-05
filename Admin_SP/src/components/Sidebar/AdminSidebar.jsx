@@ -15,7 +15,9 @@ const AdminSidebar = () => {
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to log out?")) {
             localStorage.removeItem("token");
-            navigate("/login");
+            localStorage.removeItem("user");
+            navigate("/home");
+            window.location.reload();
         }
     };
 
